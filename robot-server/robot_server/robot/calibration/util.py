@@ -151,9 +151,11 @@ async def move(user_flow: CalibrationUserFlow,
     from_pt = await user_flow.get_current_point(None)
     from_loc = Location(from_pt, None)
     cp = this_move_cp or user_flow.critical_point_override
+    MODULE_LOG.info(f"From location {from_pt}, to location {to_loc}")
 
     max_height = user_flow.hardware.get_instrument_max_height(
         user_flow.mount)
+    MODULE_LOG.info(f"The max height for {user_flow.mount} mount is {max_height}")
 
     safe = planning.safe_height(
         from_loc, to_loc, user_flow.deck, max_height)
@@ -161,6 +163,7 @@ async def move(user_flow: CalibrationUserFlow,
                      origin_cp=None,
                      dest_cp=cp)
     for move in moves:
+        MODULE_LOG.info(f"To abs {move[0]} w/ cp {move[1]}")
         await user_flow.hardware.move_to(mount=user_flow.mount,
                                          abs_position=move[0],
                                          critical_point=move[1])
