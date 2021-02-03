@@ -883,6 +883,8 @@ class API(HardwareAPILike):
             primary_offset = top_types.Point(0, 0, 0)
             s_offset = top_types.Point(*mount_offset)
 
+        self._log.info(f"Here is the mount offset during move {mount_offset}")
+
         if secondary_mount:
             primary_z = Axis.by_mount(primary_mount)
             secondary_z = Axis.by_mount(secondary_mount)
@@ -906,6 +908,8 @@ class API(HardwareAPILike):
                  (Axis.Y, abs_position.y - primary_offset.y - primary_cp.y),
                  (primary_z, abs_position.z - primary_offset.z - primary_cp.z)
                  ))
+
+        self._log.info(f"Here is the critical point {primary_cp}")
 
         await self._cache_and_maybe_retract_mount(primary_mount)
         await self._move(
