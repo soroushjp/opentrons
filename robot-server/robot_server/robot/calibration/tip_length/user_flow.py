@@ -176,6 +176,7 @@ class TipCalibrationUserFlow:
             # critical point would default to nozzle for z height
             cur_pt = await self.get_current_point(
                 critical_point=None)
+            MODULE_LOG.info(f"Measuring Nozzle {cur_pt}")
             self._nozzle_height_at_reference = cur_pt.z
         elif self._current_state == State.measuringTipOffset:
             assert self._hw_pipette.has_tip
@@ -183,6 +184,7 @@ class TipCalibrationUserFlow:
             # set critical point explicitly to nozzle
             cur_pt = await self.get_current_point(
                 critical_point=CriticalPoint.NOZZLE)
+            MODULE_LOG.info(f"Measuring Tip {cur_pt}")
 
             util.save_tip_length_calibration(
                 pipette_id=self._hw_pipette.pipette_id,

@@ -281,6 +281,7 @@ class PipetteOffsetCalibrationUserFlow:
             self._flag_unmet_transition_req(
                 command_handler="move_to_tip_rack",
                 unmet_condition="not performing tip length calibration")
+        MODULE_LOG.info(f"Tip origin moving to tiprack {self.tip_origin}")
         await self._move(Location(self.tip_origin, None))
 
     @staticmethod
